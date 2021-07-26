@@ -4,13 +4,21 @@
   "description": "EgyBest Downloader",
   "main": "index.js",
   "scripts": {
-    "start": "node ."
+    "start": "nodemon --exec node_modules/.bin/babel-node index.js"
   },
   "dependencies": {
     "axios": "^0.21.1",
     "dotenv": "^10.0.0",
-    "draftlog": "^1.0.13"
+    "draftlog": "^1.0.13",
+    "tldts": "^5.7.38"
   },
   "author": "",
-  "license": "ISC"
+  "license": "ISC",
+  "devDependencies": {
+    "@babel/cli": "^7.14.8",
+    "@babel/core": "^7.14.8",
+    "@babel/node": "^7.14.7",
+    "@babel/preset-env": "^7.14.8",
+    "nodemon": "^2.0.12"
+  }
 }
