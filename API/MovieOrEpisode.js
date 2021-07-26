@@ -1,9 +1,9 @@
 const axios = require('axios');
 import { firstGroup, firstGroupAll, splitArr } from './Funcs';
-import { parseMovieSerie, searchIndex, generalFindAndSlice } from './Common';
+import { getInformations, searchIndex, generalFindAndSlice } from './Common';
 
-export default async function parse(endPoint) {
-	let data = (await axios(`/movie/${endPoint}`, {
+export default async function parse(type, endPoint) {
+	let data = (await axios(`/${type}/${endPoint}`, {
 		params: {
 			output_format: 'json',
 			ref: 'search-p2'
@@ -17,7 +17,7 @@ export default async function parse(endPoint) {
 		return temp.item;
 	}
 
-	const infos = parseMovieSerie(findAndSlice, true);
+	const infos = getInformations(findAndSlice, type);
 
 	const _embed = findAndSlice('iframe');
 	const embed = firstGroup(_embed, /src="(.+?)"/);

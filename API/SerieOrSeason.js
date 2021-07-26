@@ -1,6 +1,6 @@
 const axios = require('axios');
 import { firstGroup, firstGroupAll, splitArr } from './Funcs';
-import { parseMovieSerie, searchIndex, generalFindAndSlice } from './Common';
+import { getInformations, searchIndex, generalFindAndSlice } from './Common';
 
 export default async function parse(endPoint) {
 	let data = (await axios(endPoint, {
@@ -17,7 +17,7 @@ export default async function parse(endPoint) {
 		return temp.item;
 	}
 
-	const infos = parseMovieSerie(findAndSlice, false);
+	const infos = getInformations(findAndSlice, 'serie');
 
 	findAndSlice('movies_small');
 

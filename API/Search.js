@@ -21,7 +21,7 @@ export async function search(q, page = 1) {
 }
 
 export function parseItem(item) {
-	const easyFirstGroup = pattern => firstGroup(item, i);
+	const easyFirstGroup = pattern => firstGroup(item, pattern);
 
 	const href = easyFirstGroup(/href="(\/.+?)"/);
 	const rating = easyFirstGroup(/<i>(.+?)</);

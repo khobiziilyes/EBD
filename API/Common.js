@@ -1,6 +1,6 @@
 import { firstGroup, firstGroupAll } from './Funcs';
 
-export function parseMovieSerie(findAndSlice, isMovie = true) {
+export function getInformations(findAndSlice, type) {
 	const _infos = findAndSlice('movie_img');
 
 	const url = firstGroup(_infos, /href="(.+?)"/);
@@ -10,25 +10,28 @@ export function parseMovieSerie(findAndSlice, isMovie = true) {
 	const _categories = findAndSlice('النوع');
 	const categories = firstGroupAll(_categories, /">(.+?)<\/a/g);
 	
-	let duration, quality;
+	let duration, quality, trailer;
 
-	if (isMovie) {
+	if (type !== 'serie') {
 		const _duration = findAndSlice('المدة');
 		duration = firstGroup(_duration.substring(22), /(.+?)<\/td/);
 
 		quality = firstGroup(_infos, /<span>(.+?)</);
 	}
 
-	const _trailer = findAndSlice('yt_trailer');
-	const trailer = 'https://www.youtube.com/watch?v=' + firstGroup(_trailer, /embed\/(\w+)/);
-	
+	if (type !== 'episode') {
+		const _trailer = findAndSlice('yt_trailer');
+		trailer = 'https://www.youtube.com/watch?v=' + firstGroup(_trailer, /embed\/(\w+)/);
+	}
+
 	return {
 		url,
 		img,
 		title,
 		categories,
-		trailer,
-		...(isMovie ? { duration, quality } : {})
+		duration,
+		quality,
+		trailer
 	}
 }
 
