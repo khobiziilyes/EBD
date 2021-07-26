@@ -3,7 +3,7 @@ import { firstGroup, firstGroupAll, splitArr } from './Funcs';
 import { parseMovieSerie, searchIndex, generalFindAndSlice } from './Common';
 
 export default async function parse(endPoint) {
-	let data = (await axios(`/series/${endPoint}`, {
+	let data = (await axios(endPoint, {
 		params: {
 			output_format: 'json',
 			ref: 'search-p2'
