@@ -33,7 +33,7 @@ export default function getInformations(findAndSlice, type) {
 		findAndSlice('<th>الحجم', true);
 	}
 	
-	return {
+	return Object.fromEntries(Object.entries({
 		url,
 		img,
 		title,
@@ -42,7 +42,7 @@ export default function getInformations(findAndSlice, type) {
 		quality,
 		trailer,
 		embed
-	}
+	}).filter(([_, item]) => item));
 }
 
 export function generalFindAndSlice(data, query, keep = false) {

@@ -1,5 +1,4 @@
 require('dotenv').config();
-require('draftlog').into(console);
 
 /*
 	- Promise catch

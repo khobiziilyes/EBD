@@ -2,7 +2,9 @@ import { firstGroup, firstGroupAll, splitArr, commonJob } from './Helpers/Funcs'
 import { searchIndex } from './Helpers/getInformations';
 
 export default async function parse(type, endPoint) {
-	const { data, infos } = await commonJob(type, endPoint);
+	const { getData, infos } = await commonJob(type, endPoint);
+	
+	const data = getData();
 	
 	const _downloads = splitArr(data.slice(0, searchIndex(data, '/tbody')), 3);
 	const downloads = _downloads.map(parseDownload);
