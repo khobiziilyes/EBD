@@ -1,6 +1,8 @@
 import { firstGroup, firstGroupAll } from './Funcs';
 
-export function getInformations(findAndSlice, type) {
+export default function getInformations(findAndSlice, type) {
+	const isSingle = ['episode', 'movie'].includes(type);
+
 	const _infos = findAndSlice('movie_img');
 
 	const url = firstGroup(_infos, /href="(.+?)"/);
@@ -10,9 +12,9 @@ export function getInformations(findAndSlice, type) {
 	const _categories = findAndSlice('النوع');
 	const categories = firstGroupAll(_categories, /">(.+?)<\/a/g);
 	
-	let duration, quality, trailer;
-
-	if (type !== 'serie') {
+	let duration, quality, trailer, embed;
+	
+	if (isSingle) {
 		const _duration = findAndSlice('المدة');
 		duration = firstGroup(_duration.substring(22), /(.+?)<\/td/);
 
@@ -23,7 +25,14 @@ export function getInformations(findAndSlice, type) {
 		const _trailer = findAndSlice('yt_trailer');
 		trailer = 'https://www.youtube.com/watch?v=' + firstGroup(_trailer, /embed\/(\w+)/);
 	}
+	
+	if (isSingle) {
+		const _embed = findAndSlice('iframe');
+		const embed = firstGroup(_embed, /src="(.+?)"/);
 
+		findAndSlice('<th>الحجم', true);
+	}
+	
 	return {
 		url,
 		img,
@@ -31,12 +40,9 @@ export function getInformations(findAndSlice, type) {
 		categories,
 		duration,
 		quality,
-		trailer
+		trailer,
+		embed
 	}
-}
-
-export function searchIndex(data, query) {
-	return data.findIndex(_ => _.includes(query));
 }
 
 export function generalFindAndSlice(data, query, keep = false) {
@@ -46,4 +52,8 @@ export function generalFindAndSlice(data, query, keep = false) {
 	data = data.slice(i + (keep ? 0 : 1));
 
 	return { item, data };
+}
+
+export function searchIndex(data, query) {
+	return data.findIndex(_ => _.includes(query));
 }

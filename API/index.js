@@ -1,17 +1,17 @@
 import Search from './Search';
-import MovieOrEpisode from './MovieOrEpisode';
-import SerieOrSeason from './SerieOrSeason';
+import Group from './Group';
+import Single from './Single';
 
-const Movie = async url => MovieOrEpisode('movie', url);
-const Episode = async url => MovieOrEpisode('episode', url);
+const Serie = (...args) => Group('series', ...args);
+const Season = (...args) => Group('season', ...args);
 
-const Serie = async url => SerieOrSeason('/series/' + url);
-const Season = async url => SerieOrSeason('/season/' + url);
+const Movie = (...args) => Single('movie', ...args);
+const Episode = (...args) => Single('episode', ...args);
 
 export {
 	Search,
-	Movie,
 	Serie,
 	Season,
+	Movie,
 	Episode
 }

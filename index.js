@@ -1,16 +1,24 @@
 require('dotenv').config();
 require('draftlog').into(console);
 
-const axios = require('axios');
-const https = require('https');
+/*
+	- Promise catch
+*/
+
+import { parse } from 'tldts';
+import axios from 'axios';
+import https from 'https';
 
 const env = process.env;
+const { HOST } = env;
+const { domain } = parse(HOST);
 
 const httpsAgent = new https.Agent({ keepAlive: true });
 
-axios.defaults.baseURL = env.HOST;
+axios.defaults.baseURL = HOST;
 axios.defaults.httpsAgent = httpsAgent;
+axios.defaults.responseType = 'json';
 
-const app = require('./app');
+import app from './app';
 
-app(env);
+app({ domain, ...env });
